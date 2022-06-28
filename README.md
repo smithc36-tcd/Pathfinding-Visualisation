@@ -19,9 +19,9 @@ Afterwards it will place walls.
 
 **Space Key**: Once the start and end points have been place you can run the path finding by pressing space. 
 
-**C key**: Pressing C will reset the whole grid, removing all walls.
+**R key**: Pressing R will reset the whole grid, removing all walls.
 
-**R key**: Pressing R will clear the animation colours, start and end points leaving the walls. 
+**C key**: Pressing C will clear the animation colours, start and end points leaving the walls. 
 
 **1 & 2 key**: Pressing 1 or 2 will load premade maps to play with.
 

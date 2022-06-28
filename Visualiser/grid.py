@@ -52,7 +52,7 @@ class Grid:
                 gridCellstate[i].append(self.grid[i][j].getState())
                 
 
-        with open("test.json", "w") as fp:
+        with open("Visualiser/maps/test.json", "w") as fp:
             json.dump(gridCellstate, fp)
 
     def loadGrid(self, file): 

@@ -51,14 +51,14 @@ def main(window, screenWidth):
                     AStar(lambda: gridObj.draw(), gridObj.grid, start, goal)
                 
             
-                if event.key == pygame.K_c:
+                if event.key == pygame.K_r:
                     start = None
                     goal = None
                     for row in gridObj.grid:
                         for cell in row:
                             cell.setOPEN()
 
-                if event.key == pygame.K_r:
+                if event.key == pygame.K_c:
                     start = None
                     goal = None
                     for row in gridObj.grid:
@@ -72,17 +72,26 @@ def main(window, screenWidth):
                 if event.key == pygame.K_l:
                     start = None
                     goal = None
-                    gridObj.loadGrid("test.json")
+                    for row in gridObj.grid:
+                        for cell in row:
+                            cell.setOPEN()
+                    gridObj.loadGrid("Visualiser/maps/test.json")
                 
                 if event.key == pygame.K_1:
                     start = None
                     goal = None
-                    gridObj.loadGrid("maze.json")
+                    for row in gridObj.grid:
+                        for cell in row:
+                            cell.setOPEN()
+                    gridObj.loadGrid("Visualiser/maps/maze.json")
 
                 if event.key == pygame.K_2:
                     start = None
                     goal = None
-                    gridObj.loadGrid("pacman.json")
+                    for row in gridObj.grid:
+                        for cell in row:
+                            cell.setOPEN()
+                    gridObj.loadGrid("Visualiser/maps/pacman.json")
         
 
     pygame.quit()
