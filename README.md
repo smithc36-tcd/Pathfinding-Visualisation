@@ -2,9 +2,10 @@
 A Python programme to visualise pathfinding on a grid, using Pygame. 
 # Running the app 
 Clone the repo and run the Runner.py file.
-It has dependencies on Pygame. 
+It has dependencies on Pygame.
+ 
 Run: 
-Pip install pygame 
+`Pip install pygame`
 Or if using a virtual environment, see the requirements.txt 
 
 # Instructions
