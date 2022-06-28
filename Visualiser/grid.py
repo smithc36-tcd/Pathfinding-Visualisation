@@ -32,7 +32,7 @@ class Grid:
             for cell in row:
                 cell.draw(self.window)
 
-        self.drawGrid()
+#        self.drawGrid()
         pygame.display.update()
 
     def getCellIndex(self, mousePosition):
