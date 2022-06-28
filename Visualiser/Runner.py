@@ -54,9 +54,7 @@ def main(window, screenWidth):
                 if event.key == pygame.K_r:
                     start = None
                     goal = None
-                    for row in gridObj.grid:
-                        for cell in row:
-                            cell.setOPEN()
+                    [cell.setOPEN() for row in gridObj.grid for cell in row]
 
                 if event.key == pygame.K_c:
                     start = None
@@ -72,25 +70,19 @@ def main(window, screenWidth):
                 if event.key == pygame.K_l:
                     start = None
                     goal = None
-                    for row in gridObj.grid:
-                        for cell in row:
-                            cell.setOPEN()
+                    [cell.setOPEN() for row in gridObj.grid for cell in row]
                     gridObj.loadGrid("Visualiser/maps/test.json")
                 
                 if event.key == pygame.K_1:
                     start = None
                     goal = None
-                    for row in gridObj.grid:
-                        for cell in row:
-                            cell.setOPEN()
+                    [cell.setOPEN() for row in gridObj.grid for cell in row]
                     gridObj.loadGrid("Visualiser/maps/maze.json")
 
                 if event.key == pygame.K_2:
                     start = None
                     goal = None
-                    for row in gridObj.grid:
-                        for cell in row:
-                            cell.setOPEN()
+                    [cell.setOPEN() for row in gridObj.grid for cell in row]
                     gridObj.loadGrid("Visualiser/maps/pacman.json")
         
 

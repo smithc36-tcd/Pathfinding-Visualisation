@@ -28,9 +28,10 @@ class Grid:
     def draw(self):
         self.window.fill(Colours.WHITE)
 
-        for row in self.grid:
-            for cell in row:
-                cell.draw(self.window)
+        [cell.draw(self.window) for row in self.grid for cell in row]
+        # for row in self.grid:
+        #     for cell in row:
+        #         cell.draw(self.window)
 
 #        self.drawGrid()
         pygame.display.update()
