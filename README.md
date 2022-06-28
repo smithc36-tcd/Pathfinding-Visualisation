@@ -6,6 +6,7 @@ It has dependencies on Pygame.
  
 Run: 
 `Pip install pygame`
+
 Or if using a virtual environment, see the requirements.txt 
 
 # Instructions
