@@ -1,5 +1,8 @@
 # Pathfinding-Visualisation
 A Python programme to visualise pathfinding on a grid, using Pygame. 
+
+![ Alt text](https://github.com/smithc36-tcd/Pathfinding-Visualisation/blob/master/Images/PathFinder.gif)
+
 # Running the app 
 Clone the repo and run the Runner.py file.
 It has dependencies on Pygame.
