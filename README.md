@@ -32,8 +32,11 @@ Afterwards it will place walls.
 
 **M key**: Press **M** to generate a randomly generated maze.
 
+### 50 x 50 Maze Generated using Prim's Random Algorithm 
 ![ Alt text](https://github.com/smithc36-tcd/Pathfinding-Visualisation/blob/master/Images/maze50x50.png)
 
+
+### 200 x 200 Maze Generated using Prim's Random Algorithm 
 ![ Alt text](https://github.com/smithc36-tcd/Pathfinding-Visualisation/blob/master/Images/maze200x200.png)
 
 ## Plan going forward
