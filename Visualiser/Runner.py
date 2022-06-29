@@ -6,7 +6,7 @@ import pygame
 
 
 def main(window, screenWidth):
-    rows = 50
+    rows = 200
 
     gridObj = Grid(rows, screenWidth, window)
     gridObj.createGrid()

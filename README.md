@@ -30,5 +30,11 @@ Afterwards it will place walls.
 
 **S and L key**: You may want to create your own map and you can, once you are happy with a map press **S** to save it and you can load your map using **L**.
 
+**M key**: Press **M** to generate a randomly generated maze.
+
+![ Alt text](https://github.com/smithc36-tcd/Pathfinding-Visualisation/blob/master/Images/maze50x50.png)
+
+![ Alt text](https://github.com/smithc36-tcd/Pathfinding-Visualisation/blob/master/Images/maze200x200.png)
+
 ## Plan going forward
 I want to add some random maze generation and some other maze solving algorithms 
