@@ -22,27 +22,33 @@ def main(window, screenWidth):
                 run = False
             
             if pygame.mouse.get_pressed()[0]:
-                row, col = gridObj.getCellIndex(pygame.mouse.get_pos())
-                currentCell = gridObj.grid[row][col]
-                if not start and currentCell != goal:
-                    start = currentCell
-                    start.setSTART()
-                
-                elif not goal and currentCell != start:
-                    goal = currentCell
-                    goal.setGOAL()
-                
-                elif currentCell != start and currentCell != goal:
-                    currentCell.setWALL()
+                if pygame.mouse.get_pos()[0] > GRIDSIZE:
+                    pass
+                else:
+                    row, col = gridObj.getCellIndex(pygame.mouse.get_pos())
+                    currentCell = gridObj.grid[row][col]
+                    if not start and currentCell != goal:
+                        start = currentCell
+                        start.setSTART()
+                    
+                    elif not goal and currentCell != start:
+                        goal = currentCell
+                        goal.setGOAL()
+                    
+                    elif currentCell != start and currentCell != goal:
+                        currentCell.setWALL()
 
             elif pygame.mouse.get_pressed()[2]:
-                row, col = gridObj.getCellIndex(pygame.mouse.get_pos())
-                currentCell = gridObj.grid[row][col]
-                currentCell.setOPEN()
-                if currentCell == start:
-                    start = None
-                if currentCell == goal:
-                    goal = None
+                if pygame.mouse.get_pos()[0] > GRIDSIZE:
+                    pass
+                else:
+                    row, col = gridObj.getCellIndex(pygame.mouse.get_pos())
+                    currentCell = gridObj.grid[row][col]
+                    currentCell.setOPEN()
+                    if currentCell == start:
+                        start = None
+                    if currentCell == goal:
+                        goal = None
             
             if event.type == pygame.KEYDOWN:
                 if event.key ==  pygame.K_SPACE and start and goal:
@@ -94,8 +100,10 @@ def main(window, screenWidth):
 
     pygame.quit()
 
-WIDTH = 800
-WINDOW =  pygame.display.set_mode((WIDTH, WIDTH))
+WIDTH = 1600
+HEIGHT = 800
+GRIDSIZE = HEIGHT
+WINDOW =  pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Pathfinding Visualiser")
 
-main(WINDOW, WIDTH)
+main(WINDOW, GRIDSIZE)
