@@ -2,6 +2,7 @@ from grid import Grid
 from utils import CellState
 from Pathfinding import AStar
 from mazeGeneration import PrimsRandom
+from GUIManger import Button, GUIMananger
 import pygame
 
 
@@ -10,6 +11,8 @@ def main(window, screenWidth):
 
     gridObj = Grid(rows, screenWidth, window)
     gridObj.createGrid()
+
+    guiManager = GUIMananger(window)
 
     start = None
     goal = None   
@@ -22,8 +25,17 @@ def main(window, screenWidth):
                 run = False
             
             if pygame.mouse.get_pressed()[0]:
-                if pygame.mouse.get_pos()[0] > GRIDSIZE:
-                    pass
+                if pygame.mouse.get_pos()[0] > GRIDSIZE-1:
+                    #Run A star button
+                    if guiManager.runButton.isOver(pygame.mouse.get_pos()) and start and goal:
+                        [cell.updateNeighbours(gridObj.grid) for row in gridObj.grid for cell in row]
+                        AStar(lambda: gridObj.draw(), gridObj.grid, start, goal)
+                    #Maze Gen button 
+                    elif guiManager.mazeGeneratorButton.isOver(pygame.mouse.get_pos()):
+                        start = None
+                        goal = None
+                        PrimsRandom(lambda: gridObj.draw(), gridObj)
+                        
                 else:
                     row, col = gridObj.getCellIndex(pygame.mouse.get_pos())
                     currentCell = gridObj.grid[row][col]
@@ -39,7 +51,7 @@ def main(window, screenWidth):
                         currentCell.setWALL()
 
             elif pygame.mouse.get_pressed()[2]:
-                if pygame.mouse.get_pos()[0] > GRIDSIZE:
+                if pygame.mouse.get_pos()[0] > GRIDSIZE-1:
                     pass
                 else:
                     row, col = gridObj.getCellIndex(pygame.mouse.get_pos())
@@ -105,5 +117,7 @@ HEIGHT = 800
 GRIDSIZE = HEIGHT
 WINDOW =  pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Pathfinding Visualiser")
+
+pygame.font.init()
 
 main(WINDOW, GRIDSIZE)
