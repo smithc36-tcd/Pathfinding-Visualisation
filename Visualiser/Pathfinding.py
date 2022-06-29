@@ -14,6 +14,9 @@ def ReconstructPath(path, current, drawFunc):
         drawFunc()
 
 def AStar(DrawFunc,grid, start, end):
+    """A* Algorithm: it is a best first algorithm which uses the 
+    current cost to node + a heuristic value to decide the best 
+    node to check next"""
     count = 0
     openSet = PriorityQueue()
     openSet.put((0, count, start))

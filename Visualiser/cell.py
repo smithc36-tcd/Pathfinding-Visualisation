@@ -70,6 +70,7 @@ class Cell:
         pygame.draw.rect(win, self.color, (self.x, self.y, self.width, self.width))
     
     def updateNeighbours(self, grid):
+        self.neighbours.clear()
         self.neighbours = []
         # UP 
         if self.row > 0 and not grid[self.row - 1][self.col].isWALL():
@@ -83,3 +84,8 @@ class Cell:
         # RIGHT
         if self.col < self.totalRows - 1 and not grid[self.row][self.col + 1].isWALL():
             self.neighbours.append(grid[self.row][self.col + 1])
+
+    def ClearNeighbours(self):
+        self.neighbours.clear()
+
+  

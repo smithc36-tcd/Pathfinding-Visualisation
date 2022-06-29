@@ -1,11 +1,13 @@
 from grid import Grid
 from utils import CellState
 from Pathfinding import AStar
+from mazeGeneration import PrimsRandom
 import pygame
 
 
 def main(window, screenWidth):
     rows = 50
+
     gridObj = Grid(rows, screenWidth, window)
     gridObj.createGrid()
 
@@ -44,13 +46,17 @@ def main(window, screenWidth):
             
             if event.type == pygame.KEYDOWN:
                 if event.key ==  pygame.K_SPACE and start and goal:
-                    for row in gridObj.grid:
-                        for cell in row:
-                            cell.updateNeighbours(gridObj.grid)
-                            
+                    [cell.updateNeighbours(gridObj.grid) for row in gridObj.grid for cell in row]
                     AStar(lambda: gridObj.draw(), gridObj.grid, start, goal)
                 
-            
+
+
+                if event.key == pygame.K_m:
+                    start = None
+                    goal = None
+                    PrimsRandom(lambda: gridObj.draw(), gridObj)
+
+
                 if event.key == pygame.K_r:
                     start = None
                     goal = None
