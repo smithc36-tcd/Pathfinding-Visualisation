@@ -39,5 +39,10 @@ Afterwards it will place walls.
 ### 200 x 200 Maze Generated using Prim's Random Algorithm 
 ![ Alt text](https://github.com/smithc36-tcd/Pathfinding-Visualisation/blob/master/Images/maze200x200.png)
 
+
+### Solving the Maze using A* 
+![ Alt text](https://github.com/smithc36-tcd/Pathfinding-Visualisation/blob/master/Images/50x50MazeSolve.gif)
+
+
 ## Plan going forward
 I want to add some random maze generation and some other maze solving algorithms 
