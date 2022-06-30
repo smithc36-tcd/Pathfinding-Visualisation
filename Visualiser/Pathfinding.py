@@ -8,13 +8,14 @@ def heuristic(Pos1, Pos2):
     x2, y2 = Pos2 
     return abs(y1 - y2) + abs(x1 - x2)
 
-def ReconstructPath(prev, current, drawFunc, visualise ):
+def ReconstructPath(prev, current, drawFunc, AnimatePath):
     while current in prev:
         current = prev[current]
         current.setPATH()
-        drawFunc()
+        if AnimatePath:
+            drawFunc()
 
-def AStar(DrawFunc,grid, start, end, visualise):
+def AStar(DrawFunc,grid, start, end, VisualiseAlgorithm, AnimatePath):
     """A* Algorithm: it is a best first algorithm which uses the 
     current cost to node + a heuristic value to decide the best 
     node to check next"""
@@ -40,7 +41,7 @@ def AStar(DrawFunc,grid, start, end, visualise):
         openSetHash.remove(current)
         
         if current == end:
-            ReconstructPath(cameFrom, current, DrawFunc, visualise)
+            ReconstructPath(cameFrom, current, DrawFunc, AnimatePath)
             end.setGOAL()
             start.setSTART()
             return True
@@ -58,7 +59,7 @@ def AStar(DrawFunc,grid, start, end, visualise):
                     openSetHash.add(neighbour)
                     neighbour.setEDGE()
         
-        if visualise:
+        if VisualiseAlgorithm:
             DrawFunc()
 
         if current != start:
@@ -69,7 +70,7 @@ def AStar(DrawFunc,grid, start, end, visualise):
 
 
 
-def Djikstra(DrawFunc,grid, start, goal, visualise):
+def Djikstra(DrawFunc,grid, start, goal, VisualiseAlgorithm, AnimatePath):
 
     count = 0
     openSet = PriorityQueue()
@@ -90,7 +91,7 @@ def Djikstra(DrawFunc,grid, start, goal, visualise):
         openSetHash.remove(current)
         
         if current == goal:
-            ReconstructPath(cameFrom, current, DrawFunc, visualise)
+            ReconstructPath(cameFrom, current, DrawFunc, AnimatePath)
             goal.setGOAL()
             start.setSTART()
             return True
@@ -107,7 +108,7 @@ def Djikstra(DrawFunc,grid, start, goal, visualise):
                     openSetHash.add(neighbour)
                     neighbour.setEDGE()
                 
-        if visualise:
+        if VisualiseAlgorithm:
             DrawFunc()
 
         if current != start:

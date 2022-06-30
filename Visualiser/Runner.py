@@ -1,7 +1,7 @@
 from grid import Grid
 from utils import CellState
 from Pathfinding import AStar, Djikstra
-from mazeGeneration import PrimsRandom
+from mazeGeneration import PrimsRandom, IterativeBacktracking
 from GUIManger import GUIMananger
 import pygame
 
@@ -9,7 +9,7 @@ import cProfile
 
 def main(window, screenWidth):
     # Define the number of rows in the grid
-    rows = 50
+    rows = 80
 
     #Create a grid object to handle the grid state 
     gridObj = Grid(rows, screenWidth, window)
@@ -21,7 +21,8 @@ def main(window, screenWidth):
     start = None
     goal = None   
     run = True
-    Visualise = False
+    VisualiseAlgorithm = True
+    AnimatePath = True
 
     gridObj.draw()
 
@@ -40,18 +41,24 @@ def main(window, screenWidth):
                     #Run A star button
                     if guiManager.aStarButton.isOver(pygame.mouse.get_pos()) and start and goal:
                         [cell.updateNeighbours(gridObj.grid) for row in gridObj.grid for cell in row]
-                        AStar(lambda: gridObj.draw(), gridObj.grid, start, goal, Visualise)
+                        AStar(lambda: gridObj.draw(), gridObj.grid, start, goal, VisualiseAlgorithm, AnimatePath)
                         
                     #Run Djikstra
                     if guiManager.djikstraButton.isOver(pygame.mouse.get_pos()) and start and goal:
                         [cell.updateNeighbours(gridObj.grid) for row in gridObj.grid for cell in row]
-                        Djikstra(lambda: gridObj.draw(), gridObj.grid, start, goal, Visualise)
+                        Djikstra(lambda: gridObj.draw(), gridObj.grid, start, goal, VisualiseAlgorithm, AnimatePath)
 
                     #Maze Gen button 
-                    elif guiManager.mazeGeneratorButton.isOver(pygame.mouse.get_pos()):
+                    elif guiManager.primsButton.isOver(pygame.mouse.get_pos()):
                         start = None
                         goal = None
-                        PrimsRandom(lambda: gridObj.draw(), gridObj, Visualise)
+                        PrimsRandom(lambda: gridObj.draw(), gridObj, VisualiseAlgorithm)
+
+                    #Maze Gen button 
+                    elif guiManager.backtrackButton.isOver(pygame.mouse.get_pos()):
+                        start = None
+                        goal = None
+                        IterativeBacktracking(lambda: gridObj.draw(), gridObj, VisualiseAlgorithm)
 
                     #Clear button
                     elif guiManager.clearButton.isOver(pygame.mouse.get_pos()):
@@ -60,9 +67,6 @@ def main(window, screenWidth):
                         # [cell.setOPEN() for row in gridObj.grid for cell in row if (cell.state != CellState.WALL)]  
                         [cell.setOPEN() for row in gridObj.grid for cell in row if (cell.state == CellState.CLOSED or cell.state == CellState.EDGE
                             or cell.state == CellState.PATH)]
-
-
-
 
                     #Reset button 
                     elif guiManager.resetButton.isOver(pygame.mouse.get_pos()):
@@ -76,7 +80,11 @@ def main(window, screenWidth):
 
                     elif guiManager.visualCheckBox.isOver(pygame.mouse.get_pos()):
                         guiManager.visualCheckBox.update()
-                        Visualise = not Visualise
+                        VisualiseAlgorithm = not VisualiseAlgorithm
+
+                    elif guiManager.pathAnimateCheckbox.isOver(pygame.mouse.get_pos()):
+                        guiManager.pathAnimateCheckbox.update()
+                        AnimatePath = not AnimatePath
 
 
                     gridObj.draw()

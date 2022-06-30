@@ -1,4 +1,5 @@
 from random import choice
+from queue import LifoQueue
 import pygame
 
 from utils import Colours
@@ -24,27 +25,29 @@ def _isFrontier(grid, current, frontierList):
 
     return frontierList
 
-def _isNeighbour(grid, current): 
+def _isNeighbour(grid, current, dist): 
     current.ClearNeighbours()
     row, col = current.getPos()
     #UP
-    if row - 2 > 0 and grid.grid[row - 2][col].isOpen():
-        current.neighbours.append(grid.grid[row - 2][col])
+    if row - dist > 0 and grid.grid[row - dist][col].isOpen():
+        current.neighbours.append(grid.grid[row - dist][col])
         #grid.grid[row - 2][col].color = Colours.RED
     #DOWN
-    if row + 2 < grid.rows and grid.grid[row + 2][col].isOpen():
-        current.neighbours.append(grid.grid[row + 2][col])
+    if row + dist < grid.rows and grid.grid[row + dist][col].isOpen():
+        current.neighbours.append(grid.grid[row + dist][col])
         #grid.grid[row + 2][col].color = Colours.RED
 
     #LEFT
-    if col - 2 > 0 and grid.grid[row][col - 2].isOpen():
-        current.neighbours.append(grid.grid[row][col - 2])
+    if col - dist > 0 and grid.grid[row][col - dist].isOpen():
+        current.neighbours.append(grid.grid[row][col - dist])
         #grid.grid[row][col - 2].color = Colours.RED
 
     #RIGHT
-    if col + 2 < grid.rows and grid.grid[row][col + 2].isOpen():
-        current.neighbours.append(grid.grid[row][col + 2])
+    if col + dist < grid.rows and grid.grid[row][col + dist].isOpen():
+        current.neighbours.append(grid.grid[row][col + dist])
         #grid.grid[row][col + 2].color = Colours.RED
+
+
 
 
 def PrimsRandom(DrawFunc, grid, visualise):
@@ -67,40 +70,129 @@ def PrimsRandom(DrawFunc, grid, visualise):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
-                    
+
             if visualise:
                 DrawFunc()
         #     Pick a random frontier cell from the list of frontier cells.
             currentCell = frontierSet.pop()
             currentCell.setOPEN()
         #     Let neighbors(frontierCell) = All cells in distance 2 in state Passage. 
-            _isNeighbour(grid, currentCell)
+            _isNeighbour(grid, currentCell, 2)
 
             # Pick a random neighbor and connect the frontier cell with the neighbor by setting 
             # the cell in-between to state Passage.
             randNeighbour = choice(currentCell.neighbours)
             randNeighbour.setOPEN()
 
-
-            rowCurr, colCurr= currentCell.getPos()
-            rowNeigh, colNeigh = randNeighbour.getPos()
-            dRow = rowCurr - rowNeigh
-            dCol = colCurr - colNeigh
-            #UP
-            if dRow == -2: 
-                grid.grid[rowNeigh - 1][colNeigh].setOPEN()
-            #DOWN
-            elif dRow == + 2:
-                grid.grid[rowNeigh + 1][colNeigh].setOPEN()
-            #left
-            elif dCol == -2:
-                grid.grid[rowNeigh][colNeigh - 1].setOPEN()
-            #right
-            elif dCol == 2: 
-                grid.grid[rowNeigh][colNeigh + 1].setOPEN()
-            
+            RemoveWall(currentCell, randNeighbour, grid)
+        
             #  Compute the frontier cells of the chosen 
             # frontier cell and add them to the frontier list.
             frontierSet = _isFrontier(grid, currentCell, frontierSet)
         DrawFunc()
+
+def RemoveWall(current, neighbour, grid):
+    rowCurr, colCurr= current.getPos()
+    rowNeigh, colNeigh = neighbour.getPos()
+    dRow = rowCurr - rowNeigh
+    dCol = colCurr - colNeigh
+    #UP
+    if dRow == -2: 
+        grid.grid[rowNeigh - 1][colNeigh].setOPEN()
+    #DOWN
+    elif dRow == + 2:
+        grid.grid[rowNeigh + 1][colNeigh].setOPEN()
+    #left
+    elif dCol == -2:
+        grid.grid[rowNeigh][colNeigh - 1].setOPEN()
+    #right
+    elif dCol == 2: 
+        grid.grid[rowNeigh][colNeigh + 1].setOPEN()
+
+# def RecursiveBacktracking(Drawfunc, grid, visualise):
+#     [cell.setWALL() for row in grid.grid for cell in row]
+
+#     i = choice(range(2, grid.rows - 2))
+#     j = choice(range(2, grid.rows - 2))
+#     current = grid.grid[i][j]
+#     Drawfunc()
+#     RecurseIsNeighbour(grid, current, 2)
+#     _recurseBacktrack(Drawfunc, grid, current, visualise)
+#     Drawfunc()
+    
+
+# def _recurseBacktrack(Drawfunc, grid, current, visualise):
+#     RecurseIsNeighbour(grid, current, 2)
+
+#     while current.neighbours:
+#         RecurseIsNeighbour(grid, current, 2)
+#         if not current.neighbours:
+#             return 
+#         neighbour = choice(current.neighbours)
+#         neighbour.setOPEN()
+#         current.neighbours.remove(neighbour)
+#         RemoveWall(current, neighbour, grid)
+#         if visualise:
+#             Drawfunc()
+#         _recurseBacktrack(Drawfunc, grid, neighbour, visualise)
+#     return
+
+
+def BTIsNeighbour(grid, current, dist): 
+    current.ClearNeighbours()
+    row, col = current.getPos()
+    #UP
+    if row - dist > 0 and grid.grid[row - dist][col].isWALL():
+        current.neighbours.append(grid.grid[row - dist][col])
+        #grid.grid[row - 2][col].color = Colours.RED
+    #DOWN
+    if row + dist < grid.rows and grid.grid[row + dist][col].isWALL():
+        current.neighbours.append(grid.grid[row + dist][col])
+        #grid.grid[row + 2][col].color = Colours.RED
+
+    #LEFT
+    if col - dist > 0 and grid.grid[row][col - dist].isWALL():
+        current.neighbours.append(grid.grid[row][col - dist])
+        #grid.grid[row][col - 2].color = Colours.RED
+
+    #RIGHT
+    if col + dist < grid.rows and grid.grid[row][col + dist].isWALL():
+        current.neighbours.append(grid.grid[row][col + dist])
+        #grid.grid[row][col + 2].color = Colours.RED
+    
+
+def IterativeBacktracking(DrawFunc, grid, visualise):
+    # Choose the initial cell, mark it as visited and push it to the stack
+    # While the stack is not empty
+    #     Pop a cell from the stack and make it a current cell
+    #     If the current cell has any neighbours which have not been visited
+    #         Push the current cell to the stack
+    #         Choose one of the unvisited neighbours
+    #         Remove the wall between the current cell and the chosen cell
+    #         Mark the chosen cell as visited and push it to the stack
+
+    Q = LifoQueue()
+
+    [cell.setWALL() for row in grid.grid for cell in row]
+
+    i = choice(range(2, grid.rows - 2))
+    j = choice(range(2, grid.rows - 2))
+    current = grid.grid[i][j]
+    current.setOPEN()
+    Q.put(current)
+
+    while not Q.empty():
+        current = Q.get()
+        BTIsNeighbour(grid, current, 2)
+        if current.neighbours:
+            neighbour = choice(current.neighbours)
+            current.neighbours.remove(neighbour)
+            Q.put(current)
+            neighbour.setOPEN()
+            RemoveWall(current, neighbour, grid)
+            Q.put(neighbour)
+            if visualise:
+                DrawFunc()
+    return
+
 

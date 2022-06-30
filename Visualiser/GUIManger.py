@@ -11,8 +11,11 @@ ASTAR_BUTTON_POS_Y = 100
 DJIKSTRA_BUTTON_POS_X = 900
 DJIKSTRA_BUTTON_POS_Y = 200
 
-MAZEGEN_BUTTON_POS_X = 1200
-MAZEGEN_BUTTON_POS_Y = 100
+PRIMS_BUTTON_POS_X = 1200
+PRIMS_BUTTON_POS_Y = 100
+
+BACKTRACK_BUTTON_X = 1200
+BACKTRACK_BUTTON_Y = 200
 
 CLEAR_BUTTON_POS_X = 900
 CLEAR_BUTTON_POS_Y = 700
@@ -26,6 +29,9 @@ QUIT_BUTTON_POS_Y = 25
 VISUAL_CHECKBOX_X = 825
 VISUAL_CHECKBOX_Y = 25
 
+PATHANIMATE_CHECKBOX_X = 1200
+PATHANIMATE_CHECKBOX_Y = 25
+
 
 class GUIMananger:
     def __init__(self, win):
@@ -35,28 +41,37 @@ class GUIMananger:
         self.aStarButton = Button(ASTAR_BUTTON_POS_X, ASTAR_BUTTON_POS_Y, "Run A*")
         self.buttonList.append(self.aStarButton)
 
+        # Djikstra Button
         self.djikstraButton = Button(DJIKSTRA_BUTTON_POS_X, DJIKSTRA_BUTTON_POS_Y, "Run Djikstra")
         self.buttonList.append(self.djikstraButton)
 
-        #Maze Generator button
-        self.mazeGeneratorButton = Button(MAZEGEN_BUTTON_POS_X, MAZEGEN_BUTTON_POS_Y, "Create Maze")
-        self.buttonList.append(self.mazeGeneratorButton)
+        #Prims Algorithm Button
+        self.primsButton = Button(PRIMS_BUTTON_POS_X, PRIMS_BUTTON_POS_Y, "Prim's Maze")
+        self.buttonList.append(self.primsButton)
 
-        #Clear button
+        # Backtrack Algorithm Button
+        self.backtrackButton = Button(BACKTRACK_BUTTON_X, BACKTRACK_BUTTON_Y, "Backtrack Maze")
+        self.buttonList.append(self.backtrackButton)
+
+        # Clear button
         self.clearButton = Button(CLEAR_BUTTON_POS_X, CLEAR_BUTTON_POS_Y, "Clear Grid")
         self.buttonList.append(self.clearButton)
 
-
-        #Reset button 
+        # Reset button 
         self.resetButton = Button(RESET_BUTTON_POS_X, RESET_BUTTON_POS_Y, "Reset Grid")
         self.buttonList.append(self.resetButton)
 
+        # Quit Button
         self.quitButton = Button(QUIT_BUTTON_POS_X, QUIT_BUTTON_POS_Y, "X", 25, 25, Colours.RED)
         self.buttonList.append(self.quitButton)
 
-        self.visualCheckBox = Checkbox(win, VISUAL_CHECKBOX_X, VISUAL_CHECKBOX_Y, text="Check to visualise Algorithms")
-        self.visualCheckBox.drawUnchecked()
-        self.visualCheckBox.drawText()
+        # Visualise Checkbox
+        self.visualCheckBox = Checkbox(win, VISUAL_CHECKBOX_X, VISUAL_CHECKBOX_Y, text="Visualise Algorithms", checked=True)
+        self.visualCheckBox.drawCheckbox()
+
+        # Animate Checkbox 
+        self.pathAnimateCheckbox = Checkbox(win, PATHANIMATE_CHECKBOX_X, PATHANIMATE_CHECKBOX_Y, text="Animate Finished Path", checked=True)
+        self.pathAnimateCheckbox.drawCheckbox()
 
 
         [button.draw(win) for button in self.buttonList]
@@ -96,7 +111,7 @@ class Button:
 
 class Checkbox:
     def __init__(self, surface, x, y, colour=(255,255,255), text="", outlineColour=(200,200,200),
-                    checkColour=(0,0,0)):
+                    checkColour=(0,0,0), checked=False):
         self.x = x
         self.y = y
         self.text = text
@@ -106,8 +121,18 @@ class Checkbox:
         self.outlineColour = outlineColour
         self.checkColour = checkColour
         self.rect = pygame.Rect(self.x, self.y, self.size, self.size)
-        self.checked = False
+        self.checked = checked
+
+    def drawCheckbox(self):
+        if self.checked:
+            self.drawUnchecked()
+            self.drawChecked()
+            self.drawText()
+        else:
+            self.drawUnchecked()
+            self.drawText
     
+
     def drawUnchecked(self):
         pygame.draw.rect(self.surface, self.colour, self.rect)
         pygame.draw.rect(self.surface, self.outlineColour, self.rect, 1)
@@ -137,68 +162,4 @@ class Checkbox:
         
 
 
-        
-    # def __init__(self, surface, x, y, idnum=0, color=(255, 255, 255),
-    #     caption="", outline_color=(200, 200, 200), check_color=(0, 0, 0),
-    #     font_size=22, font_color=(200, 200, 200), 
-    # text_offset=(28, 1), font='Ariel Black'):
-    #     self.surface = surface
-    #     self.x = x
-    #     self.y = y
-    #     self.width = 12
-    #     self.height = 12
-    #     self.color = color
-    #     self.caption = caption
-    #     self.oc = outline_color
-    #     self.cc = check_color
-    #     self.fs = font_size
-    #     self.fc = font_color
-    #     self.to = text_offset
-    #     self.ft = font
-
-    #     #identification for removal and reorginazation
-    #     self.idnum = idnum
-
-    #     # checkbox object
-    #     self.checkbox_obj = pygame.Rect(self.x, self.y, 12, 12)
-    #     self.checkbox_outline = self.checkbox_obj.copy()
-
-    #     # variables to test the different states of the checkbox
-    #     self.checked = False
-
-    # def _draw_button_text(self):
-    #     self.font = pygame.font.SysFont(self.ft, self.fs)
-    #     self.font_surf = self.font.render(self.caption, True, self.fc)
-    #     w, h = self.font.size(self.caption)
-    #     self.font_pos = (self.x + self.to[0], self.y + 12 / 2 - h / 2 + self.to[1])
-    #     self.surface.blit(self.font_surf, self.font_pos)
-
-    # def render_checkbox(self):
-    #     if self.checked:
-    #         pygame.draw.rect(self.surface, self.color, self.checkbox_obj)
-    #         pygame.draw.rect(self.surface, self.oc, self.checkbox_outline, 1)
-    #         pygame.draw.circle(self.surface, self.cc, (self.x + 6, self.y + 6), 4)
-
-    #     elif not self.checked:
-    #         pygame.draw.rect(self.surface, self.color, self.checkbox_obj)
-    #         pygame.draw.rect(self.surface, self.oc, self.checkbox_outline, 1)
-    #     self._draw_button_text()
-
-    # def isOver(self, pos):
-    #     #Pos is the mouse position or a tuple of (x,y) coordinates
-
-    #     if pos[0] > self.x and pos[0] < self.x + self.width:
-    #         if pos[1] > self.y and pos[1] < self.y + self.height:
-    #             return True
-
-    # def _update(self):
-    #     if self.checked:
-    #         self.checked = False
-    #     else:
-    #         self.checked = True
-    #     self.render_checkbox()
-
-    # def update_checkbox(self, event_object):
-    #     if event_object.type == pygame.MOUSEBUTTONDOWN:
-    #         self.click = True
-    #         self._update(event_object)
+    
