@@ -10,7 +10,8 @@ class Colours:
     BLACK = (0, 0, 0)
     PURPLE = (128, 0, 128)
     ORANGE = (255, 165 ,0)
-    GREY = (240, 240, 240)
+    GREY = (128, 128, 128)
+    LIGHTGREY = (200,200,200)
     TURQUOISE = (64, 224, 208)
 
 class CellState(IntEnum):

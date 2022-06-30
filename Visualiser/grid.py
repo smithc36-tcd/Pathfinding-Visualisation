@@ -26,13 +26,10 @@ class Grid:
             pygame.draw.line(self.window, Colours.GREY, (i*self.cellWidth, 0),(i*self.cellWidth, self.screenWidth))
 
     def draw(self):
-        self.window.fill(Colours.WHITE)
+        #self.window.fill(Colours.WHITE)
 
         [cell.draw(self.window) for row in self.grid for cell in row]
-        # for row in self.grid:
-        #     for cell in row:
-        #         cell.draw(self.window)
-
+        pygame.draw.line(self.window, Colours.GREY, (self.screenWidth, 0),(self.screenWidth, self.screenWidth))
 #        self.drawGrid()
         pygame.display.update()
 
