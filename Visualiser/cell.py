@@ -1,3 +1,4 @@
+from enum import Flag
 import pygame
 from utils import Colours, CellState
 
@@ -84,6 +85,9 @@ class Cell:
         # RIGHT
         if self.col < self.totalRows - 1 and not grid[self.row][self.col + 1].isWALL():
             self.neighbours.append(grid[self.row][self.col + 1])
+
+    def __lt__(self, other):
+        return False
 
     def ClearNeighbours(self):
         self.neighbours.clear()
