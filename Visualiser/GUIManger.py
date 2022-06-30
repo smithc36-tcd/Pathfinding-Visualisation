@@ -6,8 +6,11 @@ import pygame
 BUTTON_WIDTH = 200
 BUTTON_HEIGHT = 50
 
-RUN_BUTTON_POS_X = 900
-RUN_BUTTON_POS_Y = 100
+ASTAR_BUTTON_POS_X = 900
+ASTAR_BUTTON_POS_Y = 100
+
+DJIKSTRA_BUTTON_POS_X = 900
+DJIKSTRA_BUTTON_POS_Y = 200
 
 MAZEGEN_BUTTON_POS_X = 1200
 MAZEGEN_BUTTON_POS_Y = 100
@@ -26,8 +29,11 @@ class GUIMananger:
         self.buttonList = []
 
         #Astar Button
-        self.aStarButton = Button(RUN_BUTTON_POS_X, RUN_BUTTON_POS_Y, "Run A*")
+        self.aStarButton = Button(ASTAR_BUTTON_POS_X, ASTAR_BUTTON_POS_Y, "Run A*")
         self.buttonList.append(self.aStarButton)
+
+        self.djikstraButton = Button(DJIKSTRA_BUTTON_POS_X, DJIKSTRA_BUTTON_POS_Y, "Run Djikstra")
+        self.buttonList.append(self.djikstraButton)
 
         #Maze Generator button
         self.mazeGeneratorButton = Button(MAZEGEN_BUTTON_POS_X, MAZEGEN_BUTTON_POS_Y, "Create Maze")

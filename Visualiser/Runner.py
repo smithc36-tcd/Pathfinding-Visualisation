@@ -1,6 +1,6 @@
 from grid import Grid
 from utils import CellState
-from Pathfinding import AStar
+from Pathfinding import AStar, Djikstra
 from mazeGeneration import PrimsRandom
 from GUIManger import GUIMananger
 import pygame
@@ -39,6 +39,11 @@ def main(window, screenWidth):
                     if guiManager.aStarButton.isOver(pygame.mouse.get_pos()) and start and goal:
                         [cell.updateNeighbours(gridObj.grid) for row in gridObj.grid for cell in row]
                         AStar(lambda: gridObj.draw(), gridObj.grid, start, goal)
+                        
+
+                    if guiManager.djikstraButton.isOver(pygame.mouse.get_pos()) and start and goal:
+                        [cell.updateNeighbours(gridObj.grid) for row in gridObj.grid for cell in row]
+                        Djikstra(lambda: gridObj.draw(), gridObj.grid, start, goal)
 
                     #Maze Gen button 
                     elif guiManager.mazeGeneratorButton.isOver(pygame.mouse.get_pos()):

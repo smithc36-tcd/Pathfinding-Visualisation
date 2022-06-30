@@ -1,4 +1,5 @@
-from queue import PriorityQueue, Queue
+from queue import PriorityQueue
+from random import choice
 import pygame
 
 
@@ -7,9 +8,9 @@ def heuristic(Pos1, Pos2):
     x2, y2 = Pos2 
     return abs(y1 - y2) + abs(x1 - x2)
 
-def ReconstructPath(path, current, drawFunc):
-    while current in path:
-        current = path[current]
+def ReconstructPath(prev, current, drawFunc):
+    while current in prev:
+        current = prev[current]
         current.setPATH()
         drawFunc()
 
@@ -64,41 +65,50 @@ def AStar(DrawFunc,grid, start, end):
     
     return False
 
-# def BreathFirstSearch(grid, start, goal, DrawFunc):
-#     Q = Queue
-#     cameFrom = {}
 
-#     Q.put(start)
+
+def Djikstra(DrawFunc,grid, start, goal):
+
+    count = 0
+    openSet = PriorityQueue()
+    openSet.put((0, count, start))
+    cameFrom = {}
+
+    dist = {cell: float("inf") for row in grid for cell in row}
+    dist[start] = 0
+
+    openSetHash = {start}
+    while not openSet.empty():
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+
+        current = openSet.get()[2]
+        openSetHash.remove(current)
+        
+        if current == goal:
+            ReconstructPath(cameFrom, current, DrawFunc)
+            goal.setGOAL()
+            start.setSTART()
+            return True
+        
+        for neighbour in current.neighbours:
+            tentative_dist = dist[current] + 1
+
+            if tentative_dist < dist[neighbour]:
+                cameFrom[neighbour] = current
+                dist[neighbour] = tentative_dist
+                if neighbour not in openSetHash:
+                    count += 1 
+                    openSet.put((dist[neighbour], count, neighbour))
+                    openSetHash.add(neighbour)
+                    neighbour.setEDGE()
+                
+        DrawFunc()
+
+        if current != start:
+            current.setCLOSED()
     
-#     while not Q.empty():
-#         currentCell = Q.get()
-#         if currentCell == goal:
-#             ReconstructPath(cameFrom, currentCell, DrawFunc())
-#             goal.setGOAL()
-#             start.setSTART()
-#             return True
+    return False
 
-#         for neighbour in currentCell.neighbours:
-#             if not neighbour.isCLOSED():
-#                 neighbour.setCLOSED()
-#                 Q.put(neighbour)
-#         DrawFunc()
-
-#     return False
-
-
-
-
-# let Q be a queue
-#  3      label root as explored
-#  4      Q.enqueue(root)
-#  5      while Q is not empty do
-#  6          v := Q.dequeue()
-#  7          if v is the goal then
-#  8              return v
-#  9          for all edges from v to w in G.adjacentEdges(v) do
-# 10              if w is not labeled as explored then
-# 11                  label w as explored
-# 12                  Q.enqueue(w)
-
-    pass
