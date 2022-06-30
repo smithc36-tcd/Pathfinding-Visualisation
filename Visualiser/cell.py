@@ -65,7 +65,7 @@ class Cell:
     
     def setPATH(self):
         self.state = CellState.PATH
-        self.color = Colours.PURPLE
+        self.color = Colours.RED
 
     def draw(self, win):
         pygame.draw.rect(win, self.color, (self.x, self.y, self.width, self.width))

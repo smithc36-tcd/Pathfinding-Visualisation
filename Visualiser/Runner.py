@@ -5,6 +5,7 @@ from mazeGeneration import PrimsRandom
 from GUIManger import GUIMananger
 import pygame
 
+import cProfile
 
 def main(window, screenWidth):
     # Define the number of rows in the grid
@@ -20,6 +21,7 @@ def main(window, screenWidth):
     start = None
     goal = None   
     run = True
+    Visualise = False
 
     gridObj.draw()
 
@@ -31,31 +33,36 @@ def main(window, screenWidth):
                 run = False
             
             # If the mouse is pressed
-            if pygame.mouse.get_pressed()[0]:
+            if pygame.mouse.get_pressed()[0] and event.type == pygame.MOUSEBUTTONDOWN:
                 #If the mouse is outside of the grid
                 if pygame.mouse.get_pos()[0] > GRIDSIZE-1:
 
                     #Run A star button
                     if guiManager.aStarButton.isOver(pygame.mouse.get_pos()) and start and goal:
                         [cell.updateNeighbours(gridObj.grid) for row in gridObj.grid for cell in row]
-                        AStar(lambda: gridObj.draw(), gridObj.grid, start, goal)
+                        AStar(lambda: gridObj.draw(), gridObj.grid, start, goal, Visualise)
                         
-
+                    #Run Djikstra
                     if guiManager.djikstraButton.isOver(pygame.mouse.get_pos()) and start and goal:
                         [cell.updateNeighbours(gridObj.grid) for row in gridObj.grid for cell in row]
-                        Djikstra(lambda: gridObj.draw(), gridObj.grid, start, goal)
+                        Djikstra(lambda: gridObj.draw(), gridObj.grid, start, goal, Visualise)
 
                     #Maze Gen button 
                     elif guiManager.mazeGeneratorButton.isOver(pygame.mouse.get_pos()):
                         start = None
                         goal = None
-                        PrimsRandom(lambda: gridObj.draw(), gridObj)
+                        PrimsRandom(lambda: gridObj.draw(), gridObj, Visualise)
 
                     #Clear button
                     elif guiManager.clearButton.isOver(pygame.mouse.get_pos()):
-                        start = None
-                        goal = None
-                        [cell.setOPEN() for row in gridObj.grid for cell in row if cell.state != CellState.WALL]
+                        # start = None
+                        # goal = None
+                        # [cell.setOPEN() for row in gridObj.grid for cell in row if (cell.state != CellState.WALL)]  
+                        [cell.setOPEN() for row in gridObj.grid for cell in row if (cell.state == CellState.CLOSED or cell.state == CellState.EDGE
+                            or cell.state == CellState.PATH)]
+
+
+
 
                     #Reset button 
                     elif guiManager.resetButton.isOver(pygame.mouse.get_pos()):
@@ -66,6 +73,11 @@ def main(window, screenWidth):
                     #Reset button 
                     elif guiManager.quitButton.isOver(pygame.mouse.get_pos()):
                         run = False
+
+                    elif guiManager.visualCheckBox.isOver(pygame.mouse.get_pos()):
+                        guiManager.visualCheckBox.update()
+                        Visualise = not Visualise
+
 
                     gridObj.draw()
                     
@@ -168,4 +180,4 @@ pygame.display.set_caption("Pathfinding Visualiser")
 
 pygame.font.init()
 
-main(WINDOW, GRIDSIZE)
+cProfile.run("main(WINDOW, GRIDSIZE)")

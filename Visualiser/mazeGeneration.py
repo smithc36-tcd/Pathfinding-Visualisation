@@ -1,4 +1,5 @@
 from random import choice
+import pygame
 
 from utils import Colours
     
@@ -46,7 +47,7 @@ def _isNeighbour(grid, current):
         #grid.grid[row][col + 2].color = Colours.RED
 
 
-def PrimsRandom(DrawFunc, grid):
+def PrimsRandom(DrawFunc, grid, visualise):
         # A Grid consists of a 2 dimensional array of cells.
         # A Cell has 2 states: Blocked or Passage.
         # Start with a Grid full of Cells in state Blocked.
@@ -62,7 +63,13 @@ def PrimsRandom(DrawFunc, grid):
 
         # While the list of frontier cells is not empty:
         while frontierSet:
-            # DrawFunc()
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    
+            if visualise:
+                DrawFunc()
         #     Pick a random frontier cell from the list of frontier cells.
             currentCell = frontierSet.pop()
             currentCell.setOPEN()

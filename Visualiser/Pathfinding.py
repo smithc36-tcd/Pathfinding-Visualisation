@@ -8,13 +8,13 @@ def heuristic(Pos1, Pos2):
     x2, y2 = Pos2 
     return abs(y1 - y2) + abs(x1 - x2)
 
-def ReconstructPath(prev, current, drawFunc):
+def ReconstructPath(prev, current, drawFunc, visualise ):
     while current in prev:
         current = prev[current]
         current.setPATH()
         drawFunc()
 
-def AStar(DrawFunc,grid, start, end):
+def AStar(DrawFunc,grid, start, end, visualise):
     """A* Algorithm: it is a best first algorithm which uses the 
     current cost to node + a heuristic value to decide the best 
     node to check next"""
@@ -40,7 +40,7 @@ def AStar(DrawFunc,grid, start, end):
         openSetHash.remove(current)
         
         if current == end:
-            ReconstructPath(cameFrom, current, DrawFunc)
+            ReconstructPath(cameFrom, current, DrawFunc, visualise)
             end.setGOAL()
             start.setSTART()
             return True
@@ -57,17 +57,19 @@ def AStar(DrawFunc,grid, start, end):
                     openSet.put((fScore[neighbour], count, neighbour))
                     openSetHash.add(neighbour)
                     neighbour.setEDGE()
-                
-        DrawFunc()
+        
+        if visualise:
+            DrawFunc()
 
         if current != start:
             current.setCLOSED()
+    DrawFunc()
     
     return False
 
 
 
-def Djikstra(DrawFunc,grid, start, goal):
+def Djikstra(DrawFunc,grid, start, goal, visualise):
 
     count = 0
     openSet = PriorityQueue()
@@ -88,7 +90,7 @@ def Djikstra(DrawFunc,grid, start, goal):
         openSetHash.remove(current)
         
         if current == goal:
-            ReconstructPath(cameFrom, current, DrawFunc)
+            ReconstructPath(cameFrom, current, DrawFunc, visualise)
             goal.setGOAL()
             start.setSTART()
             return True
@@ -105,10 +107,12 @@ def Djikstra(DrawFunc,grid, start, goal):
                     openSetHash.add(neighbour)
                     neighbour.setEDGE()
                 
-        DrawFunc()
+        if visualise:
+            DrawFunc()
 
         if current != start:
             current.setCLOSED()
+    DrawFunc()
     
     return False
 
