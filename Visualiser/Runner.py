@@ -8,7 +8,7 @@ import pygame
 
 def main(window, screenWidth):
     # Define the number of rows in the grid
-    rows = 100
+    rows = 50
 
     #Create a grid object to handle the grid state 
     gridObj = Grid(rows, screenWidth, window)
@@ -21,9 +21,11 @@ def main(window, screenWidth):
     goal = None   
     run = True
 
+    gridObj.draw()
+
     # Create the game loop
     while run: 
-        gridObj.draw()
+        # gridObj.draw()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
@@ -48,16 +50,20 @@ def main(window, screenWidth):
                     elif guiManager.clearButton.isOver(pygame.mouse.get_pos()):
                         start = None
                         goal = None
-                        for row in gridObj.grid:
-                            for cell in row:
-                                if cell.state != CellState.WALL:
-                                    cell.setOPEN()
+                        [cell.setOPEN() for row in gridObj.grid for cell in row if cell.state != CellState.WALL]
 
                     #Reset button 
                     elif guiManager.resetButton.isOver(pygame.mouse.get_pos()):
                         start = None
                         goal = None
                         [cell.setOPEN() for row in gridObj.grid for cell in row]
+
+                    #Reset button 
+                    elif guiManager.quitButton.isOver(pygame.mouse.get_pos()):
+                        run = False
+
+                    gridObj.draw()
+                    
 
                 # If the mouse is inside the grid
                 else:
@@ -77,6 +83,9 @@ def main(window, screenWidth):
                     #Place wall 
                     elif currentCell != start and currentCell != goal:
                         currentCell.setWALL()
+                
+                    gridObj.draw()
+
 
             elif pygame.mouse.get_pressed()[2]:
                 # If outside grid, pass to prevent crashing
@@ -92,6 +101,9 @@ def main(window, screenWidth):
                         start = None
                     if currentCell == goal:
                         goal = None
+
+                    gridObj.draw()
+
             
             if event.type == pygame.KEYDOWN:
                 if event.key ==  pygame.K_SPACE and start and goal:

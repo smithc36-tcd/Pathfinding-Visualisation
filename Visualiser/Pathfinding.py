@@ -1,4 +1,4 @@
-from queue import PriorityQueue
+from queue import PriorityQueue, Queue
 import pygame
 
 
@@ -63,3 +63,42 @@ def AStar(DrawFunc,grid, start, end):
             current.setCLOSED()
     
     return False
+
+# def BreathFirstSearch(grid, start, goal, DrawFunc):
+#     Q = Queue
+#     cameFrom = {}
+
+#     Q.put(start)
+    
+#     while not Q.empty():
+#         currentCell = Q.get()
+#         if currentCell == goal:
+#             ReconstructPath(cameFrom, currentCell, DrawFunc())
+#             goal.setGOAL()
+#             start.setSTART()
+#             return True
+
+#         for neighbour in currentCell.neighbours:
+#             if not neighbour.isCLOSED():
+#                 neighbour.setCLOSED()
+#                 Q.put(neighbour)
+#         DrawFunc()
+
+#     return False
+
+
+
+
+# let Q be a queue
+#  3      label root as explored
+#  4      Q.enqueue(root)
+#  5      while Q is not empty do
+#  6          v := Q.dequeue()
+#  7          if v is the goal then
+#  8              return v
+#  9          for all edges from v to w in G.adjacentEdges(v) do
+# 10              if w is not labeled as explored then
+# 11                  label w as explored
+# 12                  Q.enqueue(w)
+
+    pass

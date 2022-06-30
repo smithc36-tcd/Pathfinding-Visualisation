@@ -13,43 +13,50 @@ MAZEGEN_BUTTON_POS_X = 1200
 MAZEGEN_BUTTON_POS_Y = 100
 
 CLEAR_BUTTON_POS_X = 900
-CLEAR_BUTTON_POS_Y = 200
+CLEAR_BUTTON_POS_Y = 700
 
 RESET_BUTTON_POS_X = 1200
-RESET_BUTTON_POS_Y = 200
+RESET_BUTTON_POS_Y = 700
+
+QUIT_BUTTON_POS_X = 1550
+QUIT_BUTTON_POS_Y = 25
 
 class GUIMananger:
     def __init__(self, win):
         self.buttonList = []
 
         #Astar Button
-        self.aStarButton = Button(RUN_BUTTON_POS_X, RUN_BUTTON_POS_Y, "A*")
+        self.aStarButton = Button(RUN_BUTTON_POS_X, RUN_BUTTON_POS_Y, "Run A*")
         self.buttonList.append(self.aStarButton)
 
         #Maze Generator button
-        self.mazeGeneratorButton = Button(MAZEGEN_BUTTON_POS_X, MAZEGEN_BUTTON_POS_Y, "Maze Gen")
+        self.mazeGeneratorButton = Button(MAZEGEN_BUTTON_POS_X, MAZEGEN_BUTTON_POS_Y, "Create Maze")
         self.buttonList.append(self.mazeGeneratorButton)
 
         #Clear button
-        self.clearButton = Button(CLEAR_BUTTON_POS_X, CLEAR_BUTTON_POS_Y, "Clear")
+        self.clearButton = Button(CLEAR_BUTTON_POS_X, CLEAR_BUTTON_POS_Y, "Clear Grid")
         self.buttonList.append(self.clearButton)
 
+
         #Reset button 
-        self.resetButton = Button(RESET_BUTTON_POS_X, RESET_BUTTON_POS_Y, "Reset")
+        self.resetButton = Button(RESET_BUTTON_POS_X, RESET_BUTTON_POS_Y, "Reset Grid")
         self.buttonList.append(self.resetButton)
+
+        self.quitButton = Button(QUIT_BUTTON_POS_X, QUIT_BUTTON_POS_Y, "X", 25, 25, Colours.RED)
+        self.buttonList.append(self.quitButton)
 
 
         [button.draw(win) for button in self.buttonList]
 
 
 class Button:
-    def __init__(self, x, y, text, width = BUTTON_WIDTH, height = BUTTON_HEIGHT):
+    def __init__(self, x, y, text, width = BUTTON_WIDTH, height = BUTTON_HEIGHT, colour = Colours.GREY):
         self.x = x
         self.y = y
         self.width = width
         self.height = height
         self.text = text
-        self.colour = Colours.GREY
+        self.colour = colour
         self.otherColor = Colours.LIGHTGREY
 
     def draw(self,win,outline=True):
