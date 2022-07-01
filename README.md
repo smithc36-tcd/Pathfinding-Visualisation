@@ -42,4 +42,6 @@ There are currently two algorithms implemented:
 ### Djikstra
 ![ Alt text](https://github.com/smithc36-tcd/Pathfinding-Visualisation/blob/master/Images/djikstrasolve.gif)
 
+All examples were on a 200x200 grid. 
+
 
