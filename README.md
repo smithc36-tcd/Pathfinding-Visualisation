@@ -38,7 +38,7 @@ There are currently two algorithms implemented:
 ### Iterative Backtracking 
 ![ Alt text](https://github.com/smithc36-tcd/Pathfinding-Visualisation/blob/master/Images/IBT200.gif)
 ### A* 
-![ Alt text](https://github.com/smithc36-tcd/Pathfinding-Visualisation/blob/master/Images/AstarPrims.gif)
+![ Alt text](https://github.com/smithc36-tcd/Pathfinding-Visualisation/blob/master/Images/AstarIBT.gif)
 ### Djikstra
 ![ Alt text](https://github.com/smithc36-tcd/Pathfinding-Visualisation/blob/master/Images/djikstrasolve.gif)
 
