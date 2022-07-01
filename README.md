@@ -1,5 +1,5 @@
 # Pathfinding-Visualisation
-A Python programme to visualise pathfinding on a grid, using Pygame. 
+A Python programme to visualise pathfinding and maze generation on a grid, using Pygame. Made it to practice implementing algorithms in python and to practice with pygame. 
 
 ![ Alt text](https://github.com/smithc36-tcd/Pathfinding-Visualisation/blob/master/Images/50x50MazeSolve.gif)
 
