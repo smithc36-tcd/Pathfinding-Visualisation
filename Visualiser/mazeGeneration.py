@@ -1,3 +1,4 @@
+from pydoc import visiblename
 from random import choice
 from queue import LifoQueue
 import pygame
@@ -54,12 +55,13 @@ def PrimsRandom(DrawFunc, grid, visualise):
         # A Grid consists of a 2 dimensional array of cells.
         # A Cell has 2 states: Blocked or Passage.
         # Start with a Grid full of Cells in state Blocked.
-        [cell.setWALL() for row in grid.grid for cell in row]
+        [cell.resetWALL() for row in grid.grid for cell in row]
+        DrawFunc()
         # Pick a random Cell, set it to state Passage and Compute its frontier cells. A frontier cell of a Cell is a cell with distance 2 in state Blocked and within the grid.
         i = choice(range(2, grid.rows - 2))
         j = choice(range(2, grid.rows - 2))
         initialCell = grid.grid[i][j]
-        initialCell.setOPEN()
+        initialCell.setOPEN(visualise)
         frontierSet = set()
     
         frontierSet =_isFrontier(grid, initialCell, frontierSet)
@@ -72,70 +74,43 @@ def PrimsRandom(DrawFunc, grid, visualise):
                     pygame.quit()
 
             if visualise:
-                DrawFunc()
+                pass
+                #DrawFunc()
         #     Pick a random frontier cell from the list of frontier cells.
             currentCell = frontierSet.pop()
-            currentCell.setOPEN()
+            currentCell.setOPEN(visualise)
         #     Let neighbors(frontierCell) = All cells in distance 2 in state Passage. 
             _isNeighbour(grid, currentCell, 2)
 
             # Pick a random neighbor and connect the frontier cell with the neighbor by setting 
             # the cell in-between to state Passage.
             randNeighbour = choice(currentCell.neighbours)
-            randNeighbour.setOPEN()
+            randNeighbour.setOPEN(visualise)
 
-            RemoveWall(currentCell, randNeighbour, grid)
+            RemoveWall(currentCell, randNeighbour, grid, visualise)
         
             #  Compute the frontier cells of the chosen 
             # frontier cell and add them to the frontier list.
             frontierSet = _isFrontier(grid, currentCell, frontierSet)
         DrawFunc()
 
-def RemoveWall(current, neighbour, grid):
+def RemoveWall(current, neighbour, grid, visualise):
     rowCurr, colCurr= current.getPos()
     rowNeigh, colNeigh = neighbour.getPos()
     dRow = rowCurr - rowNeigh
     dCol = colCurr - colNeigh
     #UP
     if dRow == -2: 
-        grid.grid[rowNeigh - 1][colNeigh].setOPEN()
+        grid.grid[rowNeigh - 1][colNeigh].setOPEN(visualise)
     #DOWN
     elif dRow == + 2:
-        grid.grid[rowNeigh + 1][colNeigh].setOPEN()
+        grid.grid[rowNeigh + 1][colNeigh].setOPEN(visualise)
     #left
     elif dCol == -2:
-        grid.grid[rowNeigh][colNeigh - 1].setOPEN()
+        grid.grid[rowNeigh][colNeigh - 1].setOPEN(visualise)
     #right
     elif dCol == 2: 
-        grid.grid[rowNeigh][colNeigh + 1].setOPEN()
-
-# def RecursiveBacktracking(Drawfunc, grid, visualise):
-#     [cell.setWALL() for row in grid.grid for cell in row]
-
-#     i = choice(range(2, grid.rows - 2))
-#     j = choice(range(2, grid.rows - 2))
-#     current = grid.grid[i][j]
-#     Drawfunc()
-#     RecurseIsNeighbour(grid, current, 2)
-#     _recurseBacktrack(Drawfunc, grid, current, visualise)
-#     Drawfunc()
-    
-
-# def _recurseBacktrack(Drawfunc, grid, current, visualise):
-#     RecurseIsNeighbour(grid, current, 2)
-
-#     while current.neighbours:
-#         RecurseIsNeighbour(grid, current, 2)
-#         if not current.neighbours:
-#             return 
-#         neighbour = choice(current.neighbours)
-#         neighbour.setOPEN()
-#         current.neighbours.remove(neighbour)
-#         RemoveWall(current, neighbour, grid)
-#         if visualise:
-#             Drawfunc()
-#         _recurseBacktrack(Drawfunc, grid, neighbour, visualise)
-#     return
+        grid.grid[rowNeigh][colNeigh + 1].setOPEN(visualise)
 
 
 def BTIsNeighbour(grid, current, dist): 
@@ -173,12 +148,12 @@ def IterativeBacktracking(DrawFunc, grid, visualise):
 
     Q = LifoQueue()
 
-    [cell.setWALL() for row in grid.grid for cell in row]
-
+    [cell.resetWALL() for row in grid.grid for cell in row]
+    DrawFunc()
     i = choice(range(2, grid.rows - 2))
     j = choice(range(2, grid.rows - 2))
     current = grid.grid[i][j]
-    current.setOPEN()
+    current.setOPEN(visualise)
     Q.put(current)
 
     while not Q.empty():
@@ -188,11 +163,12 @@ def IterativeBacktracking(DrawFunc, grid, visualise):
             neighbour = choice(current.neighbours)
             current.neighbours.remove(neighbour)
             Q.put(current)
-            neighbour.setOPEN()
-            RemoveWall(current, neighbour, grid)
+            neighbour.setOPEN(visualise)
+            RemoveWall(current, neighbour, grid, visualise)
             Q.put(neighbour)
             if visualise:
-                DrawFunc()
+                pass
+            #DrawFunc()
     return
 
 

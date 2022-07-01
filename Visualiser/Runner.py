@@ -9,7 +9,7 @@ import cProfile
 
 def main(window, screenWidth):
     # Define the number of rows in the grid
-    rows = 80
+    rows = 200
 
     #Create a grid object to handle the grid state 
     gridObj = Grid(rows, screenWidth, window)
@@ -37,9 +37,8 @@ def main(window, screenWidth):
             if pygame.mouse.get_pressed()[0] and event.type == pygame.MOUSEBUTTONDOWN:
                 #If the mouse is outside of the grid
                 if pygame.mouse.get_pos()[0] > GRIDSIZE-1:
-
                     #Run A star button
-                    if guiManager.aStarButton.isOver(pygame.mouse.get_pos()) and start and goal:
+                    if guiManager.aStarButton.isOver(pygame.mouse.get_pos()) and start and goal :
                         [cell.updateNeighbours(gridObj.grid) for row in gridObj.grid for cell in row]
                         AStar(lambda: gridObj.draw(), gridObj.grid, start, goal, VisualiseAlgorithm, AnimatePath)
                         
@@ -61,27 +60,26 @@ def main(window, screenWidth):
                         IterativeBacktracking(lambda: gridObj.draw(), gridObj, VisualiseAlgorithm)
 
                     #Clear button
-                    elif guiManager.clearButton.isOver(pygame.mouse.get_pos()):
-                        # start = None
-                        # goal = None
-                        # [cell.setOPEN() for row in gridObj.grid for cell in row if (cell.state != CellState.WALL)]  
-                        [cell.setOPEN() for row in gridObj.grid for cell in row if (cell.state == CellState.CLOSED or cell.state == CellState.EDGE
+                    elif guiManager.clearButton.isOver(pygame.mouse.get_pos()): 
+                        [cell.resetOPEN() for row in gridObj.grid for cell in row if (cell.state == CellState.CLOSED or cell.state == CellState.EDGE
                             or cell.state == CellState.PATH)]
 
                     #Reset button 
                     elif guiManager.resetButton.isOver(pygame.mouse.get_pos()):
                         start = None
                         goal = None
-                        [cell.setOPEN() for row in gridObj.grid for cell in row]
+                        [cell.resetOPEN() for row in gridObj.grid for cell in row]
 
                     #Reset button 
                     elif guiManager.quitButton.isOver(pygame.mouse.get_pos()):
                         run = False
 
+                    # Visualise Algorithm checkbox 
                     elif guiManager.visualCheckBox.isOver(pygame.mouse.get_pos()):
                         guiManager.visualCheckBox.update()
                         VisualiseAlgorithm = not VisualiseAlgorithm
 
+                    #
                     elif guiManager.pathAnimateCheckbox.isOver(pygame.mouse.get_pos()):
                         guiManager.pathAnimateCheckbox.update()
                         AnimatePath = not AnimatePath
@@ -109,7 +107,7 @@ def main(window, screenWidth):
                     elif currentCell != start and currentCell != goal:
                         currentCell.setWALL()
                 
-                    gridObj.draw()
+                    # gridObj.draw()
 
 
             elif pygame.mouse.get_pressed()[2]:
@@ -127,34 +125,13 @@ def main(window, screenWidth):
                     if currentCell == goal:
                         goal = None
 
-                    gridObj.draw()
+                    # gridObj.draw()
 
             
             if event.type == pygame.KEYDOWN:
                 if event.key ==  pygame.K_SPACE and start and goal:
                     [cell.updateNeighbours(gridObj.grid) for row in gridObj.grid for cell in row]
                     AStar(lambda: gridObj.draw(), gridObj.grid, start, goal)
-                
-
-
-                # if event.key == pygame.K_m:
-                #     start = None
-                #     goal = None
-                #     PrimsRandom(lambda: gridObj.draw(), gridObj)
-
-
-                # if event.key == pygame.K_r:
-                #     start = None
-                #     goal = None
-                #     [cell.setOPEN() for row in gridObj.grid for cell in row]
-
-                # if event.key == pygame.K_c:
-                #     start = None
-                #     goal = None
-                #     for row in gridObj.grid:
-                #         for cell in row:
-                #             if cell.state != CellState.WALL:
-                                #cell.setOPEN()
                 
                 if event.key == pygame.K_s:
                    gridObj.SaveGrid()
@@ -188,4 +165,5 @@ pygame.display.set_caption("Pathfinding Visualiser")
 
 pygame.font.init()
 
-cProfile.run("main(WINDOW, GRIDSIZE)")
+# cProfile.run("main(WINDOW, GRIDSIZE)")
+main(WINDOW, GRIDSIZE)

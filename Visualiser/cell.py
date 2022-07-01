@@ -4,7 +4,7 @@ from utils import Colours, CellState
 
 class Cell:
     """Defines the cell which would make up the grid"""
-    def __init__(self, row, col, width, totalRows):
+    def __init__(self, row, col, width, totalRows, window):
         self.row = row 
         self.col = col
         self.x = row * width
@@ -14,6 +14,7 @@ class Cell:
         self.neighbours = []
         self.width = width
         self.totalRows = totalRows
+        self.window = window
     
     def getPos(self):
         return self.row, self.col
@@ -39,36 +40,56 @@ class Cell:
     def isEDGE(self):
         return self.state == CellState.EDGE
 
-    def setOPEN(self):
-        self.state = CellState.OPEN
-        self.color = Colours.WHITE 
 
-    def setWALL(self):
+    def resetOPEN(self):
+        self.state = CellState.OPEN
+        self.color = Colours.WHITE
+        pygame.draw.rect(self.window, self.color, (self.x, self.y, self.width, self.width))
+
+    def resetWALL(self):
         self.state = CellState.WALL
         self.color = Colours.BLACK
+        pygame.draw.rect(self.window, self.color, (self.x, self.y, self.width, self.width))
 
-    def setSTART(self):
+    def setOPEN(self, vis=True):
+        self.state = CellState.OPEN
+        self.color = Colours.WHITE
+        self.draw(vis)
+
+    def setWALL(self, vis=True):
+        self.state = CellState.WALL
+        self.color = Colours.BLACK
+        self.draw(vis)
+
+    def setSTART(self, vis=True):
         self.state = CellState.START
         self.color = Colours.ORANGE
+        self.draw(vis)
 
-    def setGOAL(self):
+    def setGOAL(self, vis=True):
         self.state = CellState.GOAL
         self.color = Colours.TURQUOISE
+        self.draw(vis)
     
-    def setCLOSED(self):
+    def setCLOSED(self, vis=True):
         self.state = CellState.CLOSED
-        self.color = Colours.BLUE 
+        self.color = Colours.BLUE
+        self.draw(vis)
 
-    def setEDGE(self):
+    def setEDGE(self, vis=True):
         self.state = CellState.EDGE
         self.color = Colours.GREEN
+        self.draw(vis)
     
-    def setPATH(self):
+    def setPATH(self, pathVis=True):
         self.state = CellState.PATH
         self.color = Colours.RED
+        self.draw(pathVis)
 
-    def draw(self, win):
-        pygame.draw.rect(win, self.color, (self.x, self.y, self.width, self.width))
+    def draw(self, vis):
+        pygame.draw.rect(self.window, self.color, (self.x, self.y, self.width, self.width))
+        if vis:
+            pygame.display.update((self.x, self.y, self.width, self.width))
     
     def updateNeighbours(self, grid):
         self.neighbours.clear()

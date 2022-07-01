@@ -11,9 +11,8 @@ def heuristic(Pos1, Pos2):
 def ReconstructPath(prev, current, drawFunc, AnimatePath):
     while current in prev:
         current = prev[current]
-        current.setPATH()
-        if AnimatePath:
-            drawFunc()
+        current.setPATH(AnimatePath)
+    drawFunc()
 
 def AStar(DrawFunc,grid, start, end, VisualiseAlgorithm, AnimatePath):
     """A* Algorithm: it is a best first algorithm which uses the 
@@ -42,8 +41,8 @@ def AStar(DrawFunc,grid, start, end, VisualiseAlgorithm, AnimatePath):
         
         if current == end:
             ReconstructPath(cameFrom, current, DrawFunc, AnimatePath)
-            end.setGOAL()
-            start.setSTART()
+            end.setGOAL(VisualiseAlgorithm)
+            start.setSTART(VisualiseAlgorithm)
             return True
         
         for neighbour in current.neighbours:
@@ -57,13 +56,13 @@ def AStar(DrawFunc,grid, start, end, VisualiseAlgorithm, AnimatePath):
                     count += 1 
                     openSet.put((fScore[neighbour], count, neighbour))
                     openSetHash.add(neighbour)
-                    neighbour.setEDGE()
+                    neighbour.setEDGE(VisualiseAlgorithm)
         
-        if VisualiseAlgorithm:
-            DrawFunc()
+        # if VisualiseAlgorithm:
+        #     DrawFunc()
 
         if current != start:
-            current.setCLOSED()
+            current.setCLOSED(VisualiseAlgorithm)
     DrawFunc()
     
     return False
@@ -92,8 +91,8 @@ def Djikstra(DrawFunc,grid, start, goal, VisualiseAlgorithm, AnimatePath):
         
         if current == goal:
             ReconstructPath(cameFrom, current, DrawFunc, AnimatePath)
-            goal.setGOAL()
-            start.setSTART()
+            goal.setGOAL(VisualiseAlgorithm)
+            start.setSTART(VisualiseAlgorithm)
             return True
         
         for neighbour in current.neighbours:
@@ -106,14 +105,17 @@ def Djikstra(DrawFunc,grid, start, goal, VisualiseAlgorithm, AnimatePath):
                     count += 1 
                     openSet.put((dist[neighbour], count, neighbour))
                     openSetHash.add(neighbour)
-                    neighbour.setEDGE()
+                    neighbour.setEDGE(VisualiseAlgorithm)
                 
-        if VisualiseAlgorithm:
-            DrawFunc()
-
         if current != start:
-            current.setCLOSED()
+            current.setCLOSED(VisualiseAlgorithm)
     DrawFunc()
     
     return False
+
+def WallFollower(DrawFunc, grid, start, goal, VisualiseAlgorithm, AnimatePath):
+    pass
+
+
+
 

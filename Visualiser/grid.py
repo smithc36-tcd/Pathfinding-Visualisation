@@ -16,7 +16,8 @@ class Grid:
         for i in range(self.rows):
             self.grid.append([])
             for j in range(self.rows):
-                cell = Cell(i, j, self.cellWidth, self.rows)
+                cell = Cell(i, j, self.cellWidth, self.rows, self.window)
+                cell.resetOPEN()
                 self.grid[i].append(cell)
 
     def drawGrid(self):
@@ -28,7 +29,7 @@ class Grid:
     def draw(self):
         #self.window.fill(Colours.WHITE)
 
-        [cell.draw(self.window) for row in self.grid for cell in row]
+        # [cell.draw(self.window) for row in self.grid for cell in row]
         pygame.draw.line(self.window, Colours.GREY, (self.screenWidth, 0),(self.screenWidth, self.screenWidth))
 #        self.drawGrid()
         pygame.display.update()

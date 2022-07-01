@@ -13,36 +13,33 @@ Run:
 Or if using a virtual environment, see the requirements.txt 
 
 # Instructions
-Once you run the file a pygame window will appear with a grid.
+Once the Pygame Window appears, the grid will initialise and you will see a GUI. 
 
-**Left click**: Will first place the Start point, then press again to place the end point. 
-Afterwards it will place walls. 
+![ Alt text](https://github.com/smithc36-tcd/Pathfinding-Visualisation/blob/master/Images/mainScreen.png)
 
-**Right click**: Resets a Cell to an open state, removing walls, Start and end points.
+There are a number of buttons and toggles:
+- A toggle to disable the animation of the searching, instead just showing the result. This is faster than running with animation. 
+- A toggle to animate the shortest path
+ 
+## Maze Generation
+Currently there are two different maze generation algorithms implemented:
+- Randomised Prim's algorithm 
+- Iterative Backtracking
 
-**Space Key**: Once the start and end points have been place you can run the path finding by pressing space. 
+## Maze Solving Algorithms
+There are currently two algorithms implemented:
+- Djikstra 
+- A* 
 
-**R key**: Pressing R will reset the whole grid, removing all walls.
+## Examples
 
-**C key**: Pressing C will clear the animation colours, start and end points leaving the walls. 
-
-**1 & 2 key**: Pressing 1 or 2 will load premade maps to play with.
-
-**S and L key**: You may want to create your own map and you can, once you are happy with a map press **S** to save it and you can load your map using **L**.
-
-**M key**: Press **M** to generate a randomly generated maze.
-
-### 50 x 50 Maze Generated using Prim's Random Algorithm 
-![ Alt text](https://github.com/smithc36-tcd/Pathfinding-Visualisation/blob/master/Images/maze50x50.png)
-
-
-### 200 x 200 Maze Generated using Prim's Random Algorithm 
-![ Alt text](https://github.com/smithc36-tcd/Pathfinding-Visualisation/blob/master/Images/maze200x200.png)
+### Prim's 
+![ Alt text](https://github.com/smithc36-tcd/Pathfinding-Visualisation/blob/master/Images/PrimsMaze.gif)
+### Iterative Backtracking 
+![ Alt text](https://github.com/smithc36-tcd/Pathfinding-Visualisation/blob/master/Images/IBT200.gif)
+### A* 
+![ Alt text](https://github.com/smithc36-tcd/Pathfinding-Visualisation/blob/master/Images/AstarPrims.gif)
+### Djikstra
+![ Alt text](https://github.com/smithc36-tcd/Pathfinding-Visualisation/blob/master/Images/djikstrasolve.gif)
 
 
-### Solving the Maze using A* 
-![ Alt text](https://github.com/smithc36-tcd/Pathfinding-Visualisation/blob/master/Images/50x50MazeSolve.gif)
-
-
-## Plan going forward
-I want to add some random maze generation and some other maze solving algorithms 
