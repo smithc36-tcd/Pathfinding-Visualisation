@@ -9,8 +9,9 @@ import cProfile
 
 def main(window, screenWidth):
     # Define the number of rows in the grid
-    rows = 200
+    rows = 1000
 
+    clock = pygame.time.Clock()
     #Create a grid object to handle the grid state 
     gridObj = Grid(rows, screenWidth, window)
     gridObj.createGrid()
@@ -29,6 +30,7 @@ def main(window, screenWidth):
     # Create the game loop
     while run: 
         # gridObj.draw()
+        clock.tick(60)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
@@ -128,37 +130,37 @@ def main(window, screenWidth):
                     # gridObj.draw()
 
             
-            if event.type == pygame.KEYDOWN:
-                if event.key ==  pygame.K_SPACE and start and goal:
-                    [cell.updateNeighbours(gridObj.grid) for row in gridObj.grid for cell in row]
-                    AStar(lambda: gridObj.draw(), gridObj.grid, start, goal)
+            # if event.type == pygame.KEYDOWN:
+            #     if event.key ==  pygame.K_SPACE and start and goal:
+            #         [cell.updateNeighbours(gridObj.grid) for row in gridObj.grid for cell in row]
+            #         AStar(lambda: gridObj.draw(), gridObj.grid, start, goal)
                 
-                if event.key == pygame.K_s:
-                   gridObj.SaveGrid()
+            #     if event.key == pygame.K_s:
+            #        gridObj.SaveGrid()
 
-                if event.key == pygame.K_l:
-                    start = None
-                    goal = None
-                    [cell.setOPEN() for row in gridObj.grid for cell in row]
-                    gridObj.loadGrid("Visualiser/maps/test.json")
+            #     if event.key == pygame.K_l:
+            #         start = None
+            #         goal = None
+            #         [cell.setOPEN() for row in gridObj.grid for cell in row]
+            #         gridObj.loadGrid("Visualiser/maps/test.json")
                 
-                if event.key == pygame.K_1:
-                    start = None
-                    goal = None
-                    [cell.setOPEN() for row in gridObj.grid for cell in row]
-                    gridObj.loadGrid("Visualiser/maps/maze.json")
+            #     if event.key == pygame.K_1:
+            #         start = None
+            #         goal = None
+            #         [cell.setOPEN() for row in gridObj.grid for cell in row]
+            #         gridObj.loadGrid("Visualiser/maps/maze.json")
 
-                if event.key == pygame.K_2:
-                    start = None
-                    goal = None
-                    [cell.setOPEN() for row in gridObj.grid for cell in row]
-                    gridObj.loadGrid("Visualiser/maps/pacman.json")
+            #     if event.key == pygame.K_2:
+            #         start = None
+            #         goal = None
+            #         [cell.setOPEN() for row in gridObj.grid for cell in row]
+            #         gridObj.loadGrid("Visualiser/maps/pacman.json")
         
 
     pygame.quit()
 
-WIDTH = 1600
-HEIGHT = 800
+WIDTH = 1800
+HEIGHT = 1000
 GRIDSIZE = HEIGHT
 WINDOW =  pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Pathfinding Visualiser")

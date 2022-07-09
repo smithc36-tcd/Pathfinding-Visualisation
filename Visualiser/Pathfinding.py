@@ -40,6 +40,7 @@ def AStar(DrawFunc,grid, start, end, VisualiseAlgorithm, AnimatePath):
         openSetHash.remove(current)
         
         if current == end:
+            DrawFunc()
             ReconstructPath(cameFrom, current, DrawFunc, AnimatePath)
             end.setGOAL(VisualiseAlgorithm)
             start.setSTART(VisualiseAlgorithm)
@@ -63,7 +64,7 @@ def AStar(DrawFunc,grid, start, end, VisualiseAlgorithm, AnimatePath):
 
         if current != start:
             current.setCLOSED(VisualiseAlgorithm)
-    DrawFunc()
+    # DrawFunc()
     
     return False
 
@@ -90,6 +91,7 @@ def Djikstra(DrawFunc,grid, start, goal, VisualiseAlgorithm, AnimatePath):
         openSetHash.remove(current)
         
         if current == goal:
+            DrawFunc()
             ReconstructPath(cameFrom, current, DrawFunc, AnimatePath)
             goal.setGOAL(VisualiseAlgorithm)
             start.setSTART(VisualiseAlgorithm)
@@ -109,7 +111,7 @@ def Djikstra(DrawFunc,grid, start, goal, VisualiseAlgorithm, AnimatePath):
                 
         if current != start:
             current.setCLOSED(VisualiseAlgorithm)
-    DrawFunc()
+    # DrawFunc()
     
     return False
 
