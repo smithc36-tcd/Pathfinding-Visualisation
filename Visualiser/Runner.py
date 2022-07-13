@@ -9,7 +9,7 @@ import cProfile
 
 def main(window, screenWidth):
     # Define the number of rows in the grid
-    rows = 1000
+    rows = 500
 
     clock = pygame.time.Clock()
     #Create a grid object to handle the grid state 
